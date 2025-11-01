@@ -71,6 +71,16 @@ String MPU6050IMU::getConfig() {
 	doc["autoCalibrate"] = mpu_config.autoCalibrate;
 	doc["calibrateNow"] = false;
 	doc["angelReset"] = mpu_config.angleReset;
+	doc["accelRange"]["current"] = mpu_config.accelRange;
+	doc["accelRange"]["options"][0] = "2g";
+	doc["accelRange"]["options"][1] = "4g";
+	doc["accelRange"]["options"][2] = "8g";
+	doc["accelRange"]["options"][3] = "16g";
+	doc["gyroRange"]["current"] = mpu_config.gyroRange;
+	doc["gyroRange"]["options"][0] = "250 deg/s";
+	doc["gyroRange"]["options"][1] = "500 deg/s";
+	doc["gyroRange"]["options"][2] = "1000 deg/s";
+	doc["gyroRange"]["options"][3] = "2000 deg/s";
 
 	// Create string to hold output
 	String output;
@@ -98,6 +108,11 @@ bool MPU6050IMU::setConfig(String config, bool save) {
 	Description.name = doc["Name"].as<String>();
 	mpu_config.autoCalibrate = doc["autoCalibrate"].as<bool>();
 	mpu_config.angleReset = doc["angelReset"].as<bool>();
+	mpu_config.accelRange = doc["accelRange"]["current"].as<String>();
+	mpu_config.gyroRange = doc["gyroRange"]["current"].as<String>();
+
+	MPU6050_sensor.setAccelerometerRange(accelRanges[mpu_config.accelRange]);
+	MPU6050_sensor.setGyroRange(gyroRanges[mpu_config.gyroRange]);
 	
 	// Calibrate gyro if requested
 	if (doc["calibrateNow"].as<bool>()) {
