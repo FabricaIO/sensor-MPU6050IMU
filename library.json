@@ -1,0 +1,89 @@
+{
+	"name": "sensor-MPU6050IMU",
+	"version": "0.5.0",
+	"description": "I2C 6-DOF accelerometer and gyroscope for Fabrica-IO",
+	"keywords": "Fabrica-IO, sensor, accelerometer, gyroscope, position, motion",
+	"repository":
+	{
+	  "type": "git",
+	  "url": "https://github.com/FabricaIO/sensor-MPU6050IMU.git"
+	},
+	"authors":
+	[
+	  {
+		"name": "Sam Groveman",
+		"email": "SamGroveman@outlook.com",
+		"url": "https://github.com/FabricaIO"
+	  }
+	],
+	"dependencies": {
+		"MPU6050Add": "https://github.com/ShVerni/MPU6050Add.git"
+	  },
+	"license": "GPLv3",
+	"homepage": "https://github.com/FabricaIO",
+	"frameworks": "arduino",
+	"platforms": "*",
+	"fabricaio" : {
+		"name": "MPU6050",
+		"type": 0,
+		"category": "motion",
+		"libname": "MPU6050IMU",
+		"includes": ["MPU6050IMU"],
+		"description": "I2C 6-DOF accelerometer and gyroscope for Fabrica-IO",
+		"constructor":
+		[
+			[
+				{
+					"name": "I2C_bus",
+					"type": "TwoWire*",
+					"description": "The I2C bus",
+					"default": "&Wire"
+				},
+				{
+					"name": "I2CAddress",
+					"type": "uint8_t",
+					"description": "The I2C address",
+					"default": "0x68"
+				},
+				{
+					"name": "ConfigFile",
+					"type": "String",
+					"description": "The config file name",
+					"default": "MPU6050IMU.json"
+				}
+			],
+			[
+				{
+					"name": "sda",
+					"type": "int",
+					"description": "The SDA pin on the I2C bus",
+					"default": "21"
+				},
+				{
+					"name": "scl",
+					"type": "int",
+					"description": "The SCL pin on the I2C bus",
+					"default": "22"
+				},
+				{
+					"name": "I2C_bus",
+					"type": "TwoWire*",
+					"description": "The I2C bus",
+					"default": "&Wire"
+				},
+				{
+					"name": "I2CAddress",
+					"type": "uint8_t",
+					"description": "The I2C address",
+					"default": "0x68"
+				},
+				{
+					"name": "ConfigFile",
+					"type": "String",
+					"description": "The config file name",
+					"default": "MPU6050IMU.json"
+				}
+			]
+		]
+	}
+  }
