@@ -126,7 +126,7 @@ bool MPU6050IMU::setConfig(String config, bool save) {
 	return true;
 }
 
-/// @brief Take a gas measurement and stores it in an internal variable
+/// @brief Take a measurement and stores it in an internal variable
 /// @return True on success
 bool MPU6050IMU::takeMeasurement() {
 	MPU6050_sensor.update();
