@@ -69,7 +69,6 @@ String MPU6050IMU::getConfig() {
 	// Assign current values
 	doc["Name"] = Description.name;
 	doc["autoCalibrate"] = mpu_config.autoCalibrate;
-	doc["calibrateNow"] = false;
 	doc["angelReset"] = mpu_config.angleReset;
 	doc["accelRange"]["current"] = mpu_config.accelRange;
 	doc["accelRange"]["options"][0] = "2g";
@@ -113,17 +112,33 @@ bool MPU6050IMU::setConfig(String config, bool save) {
 
 	MPU6050_sensor.setAccelerometerRange(accelRanges[mpu_config.accelRange]);
 	MPU6050_sensor.setGyroRange(gyroRanges[mpu_config.gyroRange]);
-	
-	// Calibrate gyro if requested
-	if (doc["calibrateNow"].as<bool>()) {
-		calibrateGyro();
-	}
 
 	// Save file if necessary
 	if (save) {
 		return saveConfig(config_path, config);
 	}
 	return true;
+}
+
+
+/// @brief Used to calibrate sensor
+/// @param step The calibration step to execute for multi-step calibration processes
+/// @return A tuple with the fist element as a Sensor::calibration_response and the second an optional message String accompanying the response
+std::tuple<Sensor::calibration_response, String> MPU6050IMU::calibrate(int step) {
+	std::tuple<Sensor::calibration_response, String> response;
+	switch (step) {
+		case 0:
+			response = { Sensor::calibration_response::NEXT, "Keep the sensor still and then click next, this will take 3 seconds" };
+			break;
+		case 1:
+			calibrateGyro();
+			response = { Sensor::calibration_response::DONE, "Calibration completed!" };
+			break;
+		default:
+			response = { Sensor::calibration_response::ERROR, "No such calibration step: " + String(step) };
+			break;
+	}
+	return response;
 }
 
 /// @brief Take a measurement and stores it in an internal variable

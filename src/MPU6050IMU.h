@@ -23,15 +23,13 @@ class MPU6050IMU: public Sensor {
 		String getConfig();
 		bool setConfig(String config, bool save);
 		bool takeMeasurement();
+		std::tuple<Sensor::calibration_response, String> calibrate(int step);
 
 	protected:
 		/// @brief Stores configuration for MPU
 		struct {
 			/// @brief Automatically calibrate the gyroscope on start up
 			bool autoCalibrate = true;
-
-			/// @brief Calibrate the gyroscope immediately 
-			bool calibrateNow = false;
 
 			/// @brief Reset the angle calculations on each measurement
 			bool angleReset = false;
