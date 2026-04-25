@@ -56,8 +56,6 @@ bool MPU6050IMU::begin() {
 		if (mpu_config.autoCalibrate) {
 			calibrateGyro();
 		};
-		// Setting the clock to a gyro is way more stable than default 8 MHz internal clock
-		MPU6050_sensor.setClock(MPU6050Add::clock_select::MPU6050_PLL_GYROX);
 		MPU6050_sensor.resetAngles();
 	}
 	return result;
